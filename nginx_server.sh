@@ -9,6 +9,8 @@ touch /etc/init.d/request.tmp >> /dev/null 2>&1
 [ $? -ne 0 ] && printf "${RED}ERROR: Permission denied, try \'sudo\' to execute the script.${NC}\n" && exit 1
 rm -f /etc/init.d/request.tmp
 [ `dpkg -l | awk '{print $2}' | grep -co nginx >> /dev/null 2>&1` -ne 0 ] && printf "${RED}ERROR: Service nginx is already installed.${NC}\n" && exit 1
+ping www.google.com -c 1 -q >> /dev/null 2>&1
+[ $? -ne 0 ] && printf "${RED}ERROR: Network is unavailable.${NC}\n" && exit 1
 printf "${PURPLE}Start installing nginx server...${NC}\n"
 printf "===================================================================\n"
 apt-get update
@@ -25,5 +27,5 @@ do
 	sed -i "/# Make site accessible from/ a \ \ \ \ \ \ \ \ ${each_line}" /etc/nginx/sites-enabled/default
 done
 service nginx reload && service nginx restart
-[ `service nginx status | grep -co not` -eq 0 ] && printf "${GREEN}Nginx server is running${NC} (Protocol: ${RED}Https 443 port${NC})\n" || printf "${RED}Sorry, nginx server is unavailable...${NC}\n"
+[ `service nginx status | grep -co not` -eq 0 ] && printf "${GREEN}Nginx server is running${NC} (Site: ${GREEN}https://`ip a | awk '{print $2}' | grep -v '127.0.0.1' | grep -oE "([0-9]{1,3}\.){3}[0-9]{1,3}"`${NC} Protocol: ${RED}Https 443 port${NC})\n" || printf "${RED}Sorry, nginx server is unavailable...${NC}\n"
 
