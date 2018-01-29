@@ -12,16 +12,16 @@ rm -f /etc/init.d/request.tmp
 ping www.google.com -c 1 -q >> /dev/null 2>&1
 [ $? -ne 0 ] && printf "${RED}ERROR: Network is unavailable.${NC}\n" && exit 1
 printf "${PURPLE}Start installing nginx server...${NC}\n"
-printf "===================================================================\n"
+printf "=============================================================================\n"
 apt-get update
 apt-get install nginx -y
-printf "===================================================================\n\n"
+printf "=============================================================================\n\n"
 [ ! -d /etc/nginx/ssl ] && sudo mkdir -p /etc/nginx/ssl || rm -rf /etc/nginx/ssl/*
 printf "\n${PURPLE}Generate SSL Certification:${NC}\n"
-printf "===================================================================\n"
+printf "=============================================================================\n"
 openssl req -x509 -nodes -sha256 -days 365 -newkey rsa:2048 -keyout /etc/nginx/ssl/nginx.key -out /etc/nginx/ssl/nginx.crt -subj "/C=TW/ST=TAIPEI/L=Stockholm /O=A/OU=B/CN=C/emailAddress=xxx@xxx.com"
 openssl dhparam -out /etc/nginx/ssl/dhparam.pem 4096
-printf "===================================================================\n\n"
+printf "=============================================================================\n\n"
 for each_line in 'ssl_ciphers "EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH";' 'ssl_protocols TLSv1 TLSv1.1 TLSv1.2;' 'ssl_certificate_key /etc/nginx/ssl/nginx.key;' 'ssl_certificate /etc/nginx/ssl/nginx.crt;' 'ssl_dhparam /etc/nginx/ssl/dhparam.pem;' 'ssl_prefer_server_ciphers on;' 'ssl on;' 'listen 443 ssl;' '#SSL Part' ''
 do
 	sed -i "/# Make site accessible from/ a \ \ \ \ \ \ \ \ ${each_line}" /etc/nginx/sites-enabled/default
