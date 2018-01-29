@@ -8,7 +8,7 @@ NC='\033[0m'
 touch /etc/init.d/request.tmp >> /dev/null 2>&1
 [ $? -ne 0 ] && printf "${RED}ERROR: Permission denied, try \'sudo\' to execute the script.${NC}\n" && exit 1
 rm -f /etc/init.d/request.tmp
-[ `dpkg -l | awk '{print $2}' | grep -co nginx >> /dev/null 2>&1` -ne 0 ] && printf "${RED}ERROR: Service nginx is already installed.${NC}\n" && exit 1
+[ `dpkg -l | awk '{print $2}' | grep -co nginx` -ne 0 ] && printf "${RED}ERROR: Service nginx is already installed.${NC}\n" && exit 1
 ping www.google.com -c 1 -q >> /dev/null 2>&1
 [ $? -ne 0 ] && printf "${RED}ERROR: Network is unavailable.${NC}\n" && exit 1
 printf "${PURPLE}Start installing nginx server...${NC}\n"
