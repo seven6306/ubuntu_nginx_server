@@ -1,7 +1,9 @@
+#!/bin/bash
+# Script for ubuntu 14.04 LTS
+RED='\033[0;31m'
 GREEN='\033[0;32m'
 PURPLE='\033[1;35m'
 NC='\033[0m'
-Host=`ip a | awk '{print $2}' | grep -v '127.0.0.1' | grep -oE "([0-9]{1,3}\.){3}[0-9]{1,3}"`
 touch /etc/init.d/request.tmp >> /dev/null 2>&1
 [ $? -ne 0 ] && printf "${RED}ERROR: Permission denied, try \'sudo\' to execute the script.${NC}\n" && exit 1
 rm -f /etc/init.d/request.tmp
@@ -29,4 +31,5 @@ for each_line in 'ssl_ciphers "EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH";
 do	sed -i "/# Make site accessible from/ a \ \ \ \ \ \ \ \ ${each_line}" /etc/nginx/sites-enabled/default
 done
 service nginx reload && service nginx restart
-[ `service nginx status | grep -co not` -eq 0 ] && printf "\n${GREEN}Nginx server is running${NC} (Site: ${GREEN}https://${Host}${NC} Protocol: ${RED}Https 443 port${NC})\n\n" || printf "\n${RED}Sorry, nginx server is unavailable...${NC}\n\n"
+Host=`ip a | awk '{print $2}' | grep -v '127.0.0.1' | grep -oE "([0-9]{1,3}\.){3}[0-9]{1,3}"`
+[ `service nginx status | grep -co not` -eq 0 ] && printf "\nNginx server is running (Site: ${GREEN}https://${Host}${NC} Protocol: ${RED}Https 443 port${NC})\n\n" || printf "\n${RED}Sorry, nginx server is unavailable...${NC}\n\n"
