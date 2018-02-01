@@ -16,19 +16,25 @@ CheckPermission()
 }
 NetworkConnTest()
 {
-	local website=$1
+    local website=$1
     ping $website -c 1 -q >> /dev/null 2>&1
     [ $? -ne 0 ] && printf "%s\t%35s\033[0;31m %s \033[0m]\n" " * Network connection test       " "[" "Fail" && exit 1
-	printf "%s\t%35s\033[0;32m %s \033[0m]\n" " * Network connection test         " "[" "OK"
-	return 0
+    printf "%s\t%35s\033[0;32m %s \033[0m]\n" " * Network connection test         " "[" "OK"
+    return 0
 }
-CheckPermission
-[ `dpkg -l | awk '{print $2}' | grep -co nginx` -ne 0 ] && printf "${RED}ERROR: Service nginx is already installed.${NC}\n" && exit 1
-NetworkConnTest www.google.com && read -p "Setup nginx server will take 30-60 minutes, Are you sure? [y/N]: " ans
-case $ans in
-    y*|Y*) printf "${PURPLE}Start installing nginx server...${NC}\n${LINE}\n";;
-    *) exit 0
-esac
+Notification()
+{
+    local message1=$1
+    local message2=$2
+    read -p $message1 ans
+    case $ans in
+        y*|Y*) printf $message2;;
+        *) exit 0;;
+    esac
+}
+CheckPermission && NetworkConnTest www.google.com
+Notification "Setup nginx server will take 30-60 minutes, Are you sure? [y/N]: " "${PURPLE}Start installing nginx server...${NC}\n${LINE}\n"
+[ `dpkg -l | awk '{print $2}' | grep -co nginx` -ne 0 ] && printf "${RED}ERROR: Server nginx is already installed.${NC}\n" && exit 1
 apt-get update
 apt-get install nginx -y
 printf "${LINE}\n\n"
