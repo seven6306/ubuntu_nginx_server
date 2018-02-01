@@ -16,11 +16,11 @@ CheckPermission()
 }
 NetworkConnTest()
 {
-    local website=$1
+	local website=$1
     ping $website -c 1 -q >> /dev/null 2>&1
-    [ $? -ne 0 ] && printf "%s\t%35s\033[0;31m %s \033[0m]\n" " * Network connection test" "[" "Fail" && exit 1
-    printf "%s\t%35s\033[0;32m %s \033[0m]\n" " * Network connection test" "[" "OK"
-    return 0
+    [ $? -ne 0 ] && printf "%s\t%35s\033[0;31m %s \033[0m]\n" " * Network connection test       " "[" "Fail" && exit 1
+	printf "%s\t%35s\033[0;32m %s \033[0m]\n" " * Network connection test         " "[" "OK"
+	return 0
 }
 CheckPermission
 [ `dpkg -l | awk '{print $2}' | grep -co nginx` -ne 0 ] && printf "${RED}ERROR: Service nginx is already installed.${NC}\n" && exit 1
