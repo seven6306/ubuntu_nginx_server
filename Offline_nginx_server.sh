@@ -8,6 +8,15 @@ retry_time=10
 exe_path=$PWD
 LINE='============================================================================='
 
+CheckExecuteDir()
+{
+    # check currently execute directory
+    [ ! -d ${exe_path}/packages -a ! -d ${exe_path}/packages/deb_amd64 ] && return 0
+	[ ! -f ${exe_path}/nginx.conf ] && return 0
+    [ `ls ${exe_path}/packages | grep -cE *.tar.gz` -lt 4 ] && return 0
+	[ `ls ${exe_path}/packages/deb_amd64 | grep -cE *.deb` -lt 13 ] && return 0
+    return 1
+}
 CheckPermission()
 {
     local tmpfile=/etc/init.d/request.tmp
@@ -25,6 +34,7 @@ Notification()
         *) exit 0;;
     esac
 }
+CheckExecuteDir && printf "\033[0;31mERROR: Currently path is not allow to execute script.\033[0m\n" && exit 1 || printf "%s\t%31s\033[0;32m %s \033[0m]\n" " * Check currently path is effective" "[" "OK"
 CheckPermission && Notification "Setup nginx server will take 15-20 minutes, Are you sure? [y/N]: " "${PURPLE}Start installing nginx server...${NC}\n${LINE}\n"
 for pkg in 'nginx-1.4.6.tar.gz' 'pcre-8.40.tar.gz' 'openssl-1.0.1c.tar.gz' 'zlib-1.2.11.tar.gz'
 do  printf "${PURPLE}Extract package $pkg${NC}\n"
