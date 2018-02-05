@@ -7,6 +7,6 @@
 
 # Usage
 <ul>1. Setup nginx server within internet, 
-  <br><ol>Script: <b><span style="color:blue">nginx_server.sh</span></b></ol></ul>
+  <br><ol>Script: <b><span style="color:blue"> *nginx_server.sh* </span></b></ol></ul>
 <ul>2. Setup nginx server without internet,
   <br><ol>Script: <b><font color="gray">Offline_nginx_server.sh</font></b></ol></ul>
