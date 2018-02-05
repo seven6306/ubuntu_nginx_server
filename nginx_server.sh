@@ -1,12 +1,13 @@
 #!/bin/bash
 # Script for ubuntu 14.04 LTS
+. lib/CheckInstall.sh
 . lib/Notification.sh
 . lib/SSLGenerator.sh
 . lib/NetworkConnTest.sh
 . lib/CheckPermission.sh
 . lib/declare_variables.sh
 
-CheckPermission && NetworkConnTest www.google.com
+CheckPermission && CheckInstall && NetworkConnTest www.google.com
 Notification "Setup nginx server will take 30-60 minutes, Are you sure? [y/N]: " "${PURPLE}Start installing nginx server...${NC}\n${LINE}\n"
 [ `dpkg -l | awk '{print $2}' | grep -co nginx` -ne 0 ] && printf "${RED}ERROR: Server nginx is already installed.${NC}\n" && exit 1
 apt-get update
