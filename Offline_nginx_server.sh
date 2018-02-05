@@ -1,39 +1,12 @@
 #!/bin/bash
 # Script for ubuntu 14.04 LTS
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-PURPLE='\033[1;35m'
-NC='\033[0m'
+. lib/Notification.sh
+. lib/CheckExecuteDir.sh
+. lib/CheckPermission.sh
+. lib/declare_variables.sh
 retry_time=10
 exe_path=$PWD
-LINE='============================================================================='
 
-CheckExecuteDir()
-{
-    # check currently execute directory
-    [ ! -d ${exe_path}/packages -a ! -d ${exe_path}/packages/deb_amd64 ] && return 0
-	[ ! -f ${exe_path}/nginx.conf ] && return 0
-    [ `ls ${exe_path}/packages | grep -cE *.tar.gz` -lt 4 ] && return 0
-	[ `ls ${exe_path}/packages/deb_amd64 | grep -cE *.deb` -lt 13 ] && return 0
-    return 1
-}
-CheckPermission()
-{
-    local tmpfile=/etc/init.d/request.tmp
-    touch $tmpfile >> /dev/null 2>&1
-    [ $? -ne 0 ] && printf "\033[0;31mERROR: Permission denied, try \'sudo\' to execute the script.\033[0m\n" && exit 1
-    printf "%s\t%31s\033[0;32m %s \033[0m]\n" " * Check root permission in executed" "[" "OK"
-    rm -f $tmpfile
-    return 0
-}
-Notification()
-{
-    read -p "$1" ans
-    case $ans in
-        y*|Y*) printf "$2";;
-        *) exit 0;;
-    esac
-}
 CheckExecuteDir && printf "\033[0;31mERROR: Currently path is not allow to execute script.\033[0m\n" && exit 1 || printf "%s\t%31s\033[0;32m %s \033[0m]\n" " * Check currently path is effective" "[" "OK"
 CheckPermission && Notification "Setup nginx server will take 15-20 minutes, Are you sure? [y/N]: " "${PURPLE}Start installing nginx server...${NC}\n${LINE}\n"
 for pkg in 'nginx-1.4.6.tar.gz' 'pcre-8.40.tar.gz' 'openssl-1.0.1c.tar.gz' 'zlib-1.2.11.tar.gz'
@@ -45,7 +18,7 @@ done
 
 #sudo apt-get install build-essential libssl-dev -y
 printf "${LINE}\n${PURPLE}Install deb packages starting:${NC}\n${LINE}\n"
-[ `lscpu | grep Architecture: | awk '{print $2}' | grep -c 64` -ne 0 ] && dpkg -i ${exe_path}/packages/deb_amd64/*.deb
+[ `lscpu | grep Architecture: | awk '{print $2}' | grep -c 64` -ne 0 ] && dpkg -i ${exe_path}/packages/deb_amd64/*.deb || dpkg -i ${exe_path}/packages/deb_i386/*.deb
 
 for dir in "/usr/src/pcre-8.40" "/usr/src/zlib-1.2.11" "/usr/src/openssl-1.0.1c"
 do  cd $dir && printf "${LINE}\n${PURPLE}Configure `echo $dir | awk -F\/ '{print $4}'` starting:${NC}\n${LINE}\n"

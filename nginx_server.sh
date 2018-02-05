@@ -1,35 +1,10 @@
 #!/bin/bash
 # Script for ubuntu 14.04 LTS
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-PURPLE='\033[1;35m'
-NC='\033[0m'
-LINE='============================================================================='
-CheckPermission()
-{
-    local tmpfile=/etc/init.d/request.tmp
-    touch $tmpfile >> /dev/null 2>&1
-    [ $? -ne 0 ] && printf "\033[0;31mERROR: Permission denied, try \'sudo\' to execute the script.\033[0m\n" && exit 1
-    printf "%s\t%31s\033[0;32m %s \033[0m]\n" " * Check root permission in executed" "[" "OK"
-    rm -f $tmpfile
-    return 0
-}
-NetworkConnTest()
-{
-    local website=$1
-    ping $website -c 1 -q >> /dev/null 2>&1
-    [ $? -ne 0 ] && printf "%s\t%31s\033[0;31m %s \033[0m]\n" " * Network connection test       " "[" "Fail" && exit 1
-    printf "%s\t%31s\033[0;32m %s \033[0m]\n" " * Network connection test         " "[" "OK"
-    return 0
-}
-Notification()
-{
-    read -p "$1" ans
-    case $ans in
-        y*|Y*) printf "$2";;
-        *) exit 0;;
-    esac
-}
+. lib/Notification.sh
+. lib/NetworkConnTest.sh
+. lib/CheckPermission.sh
+. lib/declare_variables.sh
+
 CheckPermission && NetworkConnTest www.google.com
 Notification "Setup nginx server will take 30-60 minutes, Are you sure? [y/N]: " "${PURPLE}Start installing nginx server...${NC}\n${LINE}\n"
 [ `dpkg -l | awk '{print $2}' | grep -co nginx` -ne 0 ] && printf "${RED}ERROR: Server nginx is already installed.${NC}\n" && exit 1
