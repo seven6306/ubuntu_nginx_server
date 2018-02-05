@@ -6,5 +6,7 @@
 <ul>5. Easily uninstall nginx server</ul>
 
 # Usage
-<ul>1. Setup nginx server within internet, Script:  <b>nginx_server.sh</b></ul>
-<ul>2. Setup nginx server without internet, Script:  <b>Offline_nginx_server.sh</b></ul>
+<ul>1. Setup nginx server within internet, Script:  
+  <b>nginx_server.sh</b></ul>
+<ul>2. Setup nginx server without internet, Script:  
+  <b>Offline_nginx_server.sh</b></ul>
