@@ -17,5 +17,5 @@ for rm_pkg in 'nginx-1.4.6' 'pcre-8.40' 'openssl-1.0.1c' 'zlib-1.2.11'
 do  [ -d /usr/src/${rm_pkg} ] && rm -rf /usr/src/${rm_pkg}
     [ -f /usr/src/${rm_pkg}.tar.gz ] && rm -f /usr/src/${rm_pkg}.tar.gz
 done
-printf "${LINE}\n\n * Remove nginx server completed.\n\n"
+printf "${LINE}\n\n ${GREEN}*${NC} Remove nginx server completed.\n\n"
 
