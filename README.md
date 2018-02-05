@@ -10,3 +10,4 @@
   <br><ol>Script: <b><font color="blue">Offline_nginx_server.sh</font></b></ol></ul>
 <ul>2. Setup nginx server without internet,
   <br><ol>Script: <b><font color="gray">Offline_nginx_server.sh</font></b></ol></ul>
+<ul>2. Uninstall: <b><font color="gray">Offline_nginx_server.sh</font></b></ul>
