@@ -1,6 +1,7 @@
 #!/bin/bash
 # Script for ubuntu 14.04 LTS
 . lib/Notification.sh
+. lib/SSLGenerator.sh
 . lib/CheckExecuteDir.sh
 . lib/CheckPermission.sh
 . lib/declare_variables.sh
@@ -42,12 +43,10 @@ do  sudo ./configure --with-openssl=/usr/local/ssl --with-http_ssl_module --with
     retry_time=$(($retry_time - 1))
 	printf " ${RED}*${NC} Retry times remain: ${RED}${retry_time}${NC}\n"
 done
+printf "${LINE}\n\t\t\t${RED}Packages installed end line${NC}\n${LINE}\n"
 
-printf "${LINE}\n\t\t\t${RED}Packages installed end line${NC}\n${LINE}\n\n${PURPLE}Generate SSL Certification:${NC}\n${LINE}\n"
-[ ! -d /usr/local/nginx/ssl ] && mkdir -p /usr/local/nginx/ssl
-openssl req -x509 -nodes -sha256 -days 365 -newkey rsa:2048 -keyout /usr/local/nginx/ssl/nginx.key -out /usr/local/nginx/ssl/nginx.crt -subj "/C=TW/ST=TAIPEI/L=Stockholm /O=A/OU=B/CN=C/emailAddress=xxx@xxx.com"
+SSLGenerator /usr/local/nginx
 
-[ -f /usr/local/nginx/ssl/nginx.key -a -f /usr/local/nginx/ssl/nginx.crt ] && printf "${LINE}\n\n\033[0;32m * \033[0m%s\t%24s\033[0;32m %s \033[0m]\n" "Generate SSL certification encrypt: sha256" "[" "OK" || printf "${LINE}\n\n\033[0;31m * \033[0m%s\t%24s\033[0;31m %s \033[0m]\n" "Generate SSL certification encrypt: sha256" "[" "Fail"
 [ `objs/nginx -V 2>&1 | grep -c with-ipv6` -ne 0 ] && printf "\033[0;32m * \033[0m%s\t%32s\033[0;32m %s \033[0m]\n" "Import ipv6 module to nginx server" "[" "OK" || printf "\033[0;31m * \033[0m%s\t%32s\033[0;31m %s \033[0m]\n" "Import ipv6 module to nginx server" "[" "Fail"
 rm -f /usr/local/nginx/conf/nginx.conf && cp -f ${exe_path}/nginx.conf /usr/local/nginx/conf/nginx.conf
 [ -f /usr/local/nginx/conf/nginx.conf ] && printf "\033[0;32m * \033[0m%s\t%32s\033[0;32m %s \033[0m]\n" "Move nginx server configuration file" "[" "OK" || printf "\033[0;31m * \033[0m%s\t%32s\033[0;31m %s \033[0m]\n" "Move nginx server configuration file" "[" "Fail"
