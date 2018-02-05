@@ -11,4 +11,5 @@ SSLGenerator()
     else
         printf "${LINE}\n\n\033[0;31m * \033[0m%s\t%24s\033[0;31m %s \033[0m]\n" "Generate SSL certification encrypt: sha256" "[" "Fail"
         return 1
+    fi
 }
