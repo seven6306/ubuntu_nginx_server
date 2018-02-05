@@ -7,6 +7,6 @@
 
 # Usage
 <ul>1. Setup nginx server within internet, Script:  
-  <b>nginx_server.sh</b></ul>
+  <br><b>nginx_server.sh</b></ul>
 <ul>2. Setup nginx server without internet, Script:  
-  <b>Offline_nginx_server.sh</b></ul>
+  <br><b>Offline_nginx_server.sh</b></ul>
