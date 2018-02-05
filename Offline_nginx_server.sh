@@ -48,7 +48,7 @@ printf "${LINE}\n\t\t\t${RED}Packages installed end line${NC}\n${LINE}\n"
 
 SSLGenerator /usr/local/nginx
 
-[ `objs/nginx -V 2>&1 | grep -c with-ipv6` -ne 0 ] && printf "\033[0;32m * \033[0m%s\t%32s\033[0;32m %s \033[0m]\n" "Import ipv6 module to nginx server" "[" "OK" || printf "\033[0;31m * \033[0m%s\t%32s\033[0;31m %s \033[0m]\n" "Import ipv6 module to nginx server" "[" "Fail"
+[ `/usr/src/nginx-1.4.6/objs/nginx -V 2>&1 | grep -c with-ipv6` -ne 0 ] && printf "\033[0;32m * \033[0m%s\t%32s\033[0;32m %s \033[0m]\n" "Import ipv6 module to nginx server" "[" "OK" || printf "\033[0;31m * \033[0m%s\t%32s\033[0;31m %s \033[0m]\n" "Import ipv6 module to nginx server" "[" "Fail"
 rm -f /usr/local/nginx/conf/nginx.conf && cp -f ${exe_path}/nginx.conf /usr/local/nginx/conf/nginx.conf
 [ -f /usr/local/nginx/conf/nginx.conf ] && printf "\033[0;32m * \033[0m%s\t%32s\033[0;32m %s \033[0m]\n" "Move nginx server configuration file" "[" "OK" || printf "\033[0;31m * \033[0m%s\t%32s\033[0;31m %s \033[0m]\n" "Move nginx server configuration file" "[" "Fail"
 [ `grep -c "/usr/local/nginx/sbin/nginx" /etc/init.d/rc.local` -eq 0 ] && sed -i "/### END INIT INFO/ a /usr/local/nginx/sbin/nginx" /etc/init.d/rc.local
@@ -56,4 +56,3 @@ ln -f /usr/local/nginx/sbin/nginx /usr/sbin/nginx
 /usr/local/nginx/sbin/nginx && printf "\033[0;32m * \033[0m%s\t%32s\033[0;32m %s \033[0m]\n" "Starting nginx server plug-in is" "[" "OK" || printf "\033[0;31m * \033[0m%s\t%32s\033[0;31m %s \033[0m]\n" "Starting nginx server plug-in is" "[" "Fail"
 host=`ip a | awk '{print $2}' | grep -v '127.0.0.1' | grep -oE "([0-9]{1,3}\.){3}[0-9]{1,3}"`
 printf "\n${PURPLE}Nginx server info:${NC}\n * version - ${GREEN}v1.4.6${NC}\n * site - ${GREEN}https://${host}${NC} \n * port - ${RED}443 (SSL)${NC}\n * config - /usr/local/nginx/conf/nginx.conf\n * command - nginx -s ${RED}stop${NC}|${RED}quit${NC}|${GREEN}reopen${NC}|${GREEN}reload${NC}\n\n"
-
