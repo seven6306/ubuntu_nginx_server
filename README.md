@@ -4,3 +4,7 @@
 <ul>3. Encrypt with three way, improve site security</ul>
 <ul>4. Add offline install script, support i386 & amd64</ul>
 <ul>5. Easily uninstall nginx server</ul>
+
+# Usage
+<ul>1. Setup nginx server within internet, Script:  <b>nginx_server.sh</b></ul>
+<ul>2. Setup nginx server without internet, Script:  <b>Offline_nginx_server.sh</b></ul>
