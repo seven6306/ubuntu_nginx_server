@@ -1,16 +1,21 @@
 #!/bin/bash
 CheckInstall()
 {
-    local action=$1
-    if [ -d /etc/nginx -o -d /usr/local/nginx ]; then
-        case $action in
-            --install) printf "\033[0;31mERROR: Nginx server is already installed.\033[0m\n" && exit 1;;
-	    --remove)  printf "%s\t%31s\033[0;32m %s \033[0m]\n" " * Check if nginx is installed      " "[" "OK";;
-        esac
-    else
-        case $action in
-            --install) printf "%s\t%31s\033[0;32m %s \033[0m]\n" " * Check if nginx is installed      " "[" "OK" && return 0;;
-	    --remove)  printf "\033[0;31mERROR: Nginx server is not installed.\033[0m\n" && exit 1;;
-        esac
-    fi
+    local pkgName=$1
+    local action=$2
+    local file=$3
+    local dir=$4
+    local x=0
+    for f in `echo $file | sed 's,\,, ,g'`
+    do  [ -f $f ] && x=$(($x+1))
+    done
+    for d in `echo $dir | sed 's,\,, ,g'`
+    do  [ -d $d ] && x=$(($x+1))
+    done
+    case $action in
+        --install) [ $x -ne 0 ] && printf "\033[0;31mERROR: $pkgName is already installed.\033[0m\n" && exit 1;;
+        --remove)  [ $x -ne 0 ] && printf "\033[0;31mERROR: $pkgName is not installed.\033[0m\n" && exit 1;;
+    esac
+    printf "%s\t%31s\033[0;32m %s \033[0m]\n" " * Check if $pkgName is installed      " "[" "OK"
+    return 0
 }
