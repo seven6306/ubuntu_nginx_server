@@ -10,7 +10,7 @@
 
 CheckInstall Nginx --install "/usr/sbin/nginx" "/etc/nginx,/usr/local/nginx"
 CheckPermission && NetworkConnTest www.google.com
-Notification "Setup nginx server will take 30-60 minutes, Are you sure? [y/N]: " "${PURPLE}Start installing nginx server...${NC}\n${LINE}\n"
+Notification "Setup nginx server will take 30-60 minutes, Are you sure? [y/N]: " "${PURPLE}Start installing nginx server...${NC}\n${LINE}\n" || exit 0
 [ `dpkg -l | awk '{print $2}' | grep -co nginx` -ne 0 ] && printf "${RED}ERROR: Server nginx is already installed.${NC}\n" && exit 1
 apt-get update
 apt-get install nginx -y
