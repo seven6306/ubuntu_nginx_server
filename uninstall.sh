@@ -7,7 +7,7 @@
 
 CheckPermission && CheckInstall Nginx --remove "/usr/sbin/nginx" "/etc/nginx,/usr/local/nginx"
 printf "Remove nginx server will ${RED}terminate each web service dependent on it${NC}, \n"
-Notification "Are you sure? [y/N]: " "\n${PURPLE}Start removing nginx server...${NC}\n${LINE}\n"
+Notification "Are you sure? [y/N]: " "\n${PURPLE}Start removing nginx server...${NC}\n${LINE}\n" || exit 0
 [ `dpkg -l | grep -c nginx` -ne 0 ] && service nginx stop && apt-get remove nginx nginx-core -y
 [ `ps -ef | grep -c nginx` -gt 1 ] && /usr/local/nginx/sbin/nginx -s stop
 [ -f /usr/sbin/nginx ] && rm -f /usr/sbin/nginx
