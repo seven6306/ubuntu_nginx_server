@@ -3,15 +3,15 @@
 . lib/CheckInstall.sh
 . lib/Notification.sh
 . lib/SSLGenerator.sh
+. lib/GethostIPAddr.sh
 . lib/CheckExecuteDir.sh
 . lib/CheckPermission.sh
 . lib/declare_variables.sh
 retry_time=10
 exe_path=$PWD
 
-CheckInstall Nginx --install "/usr/sbin/nginx" "/etc/nginx,/usr/local/nginx"
 CheckExecuteDir && printf "\033[0;31mERROR: Currently path is not allow to execute script.\033[0m\n" && exit 1 || printf "%s\t%31s\033[0;32m %s \033[0m]\n" " * Check currently path is effective" "[" "OK"
-CheckPermission && Notification "Setup nginx server will take 15-20 minutes, Are you sure? [y/N]: " "${PURPLE}Start installing nginx server...${NC}\n${LINE}\n"
+CheckPermission && CheckInstall --install && Notification "Setup nginx server will take 15-20 minutes, Are you sure? [y/N]: " "${PURPLE}Start installing nginx server...${NC}\n${LINE}\n"
 for pkg in 'nginx-1.4.6.tar.gz' 'pcre-8.40.tar.gz' 'openssl-1.0.1c.tar.gz' 'zlib-1.2.11.tar.gz'
 do  printf "${PURPLE}Extract package $pkg${NC}\n"
     rm -rf /usr/src/$pkg /usr/src/`echo $pkg | awk -F\.tar '{print $1}'`
@@ -55,5 +55,5 @@ rm -f /usr/local/nginx/conf/nginx.conf && cp -f ${exe_path}/nginx.conf /usr/loca
 [ `grep -c "/usr/local/nginx/sbin/nginx" /etc/init.d/rc.local` -eq 0 ] && sed -i "/### END INIT INFO/ a /usr/local/nginx/sbin/nginx" /etc/init.d/rc.local
 ln -f /usr/local/nginx/sbin/nginx /usr/sbin/nginx
 /usr/local/nginx/sbin/nginx && printf "\033[0;32m * \033[0m%s\t%32s\033[0;32m %s \033[0m]\n" "Starting nginx server plug-in is" "[" "OK" || printf "\033[0;31m * \033[0m%s\t%32s\033[0;31m %s \033[0m]\n" "Starting nginx server plug-in is" "[" "Fail"
-host=`ip a | awk '{print $2}' | grep -v '127.0.0.1' | grep -oE "([0-9]{1,3}\.){3}[0-9]{1,3}"`
-printf "\n${PURPLE}Nginx server info:${NC}\n * version - ${GREEN}v1.4.6${NC}\n * site - ${GREEN}https://${host}${NC} \n * port - ${RED}443 (SSL)${NC}\n * config - /usr/local/nginx/conf/nginx.conf\n * command - nginx -s ${RED}stop${NC}|${RED}quit${NC}|${GREEN}reopen${NC}|${GREEN}reload${NC}\n\n"
+printf "\n${PURPLE}Nginx server info:${NC}\n * version - ${GREEN}v1.4.6${NC}\n * site - ${GREEN}https://`GethostIPAddr`${NC} \n * port - ${RED}443 (SSL)${NC}\n * config - /usr/local/nginx/conf/nginx.conf\n * command - nginx -s ${RED}stop${NC}|${RED}quit${NC}|${GREEN}reopen${NC}|${GREEN}reload${NC}\n\n"
+

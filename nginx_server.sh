@@ -3,12 +3,12 @@
 . lib/CheckInstall.sh
 . lib/Notification.sh
 . lib/SSLGenerator.sh
+. lib/GethostIPAddr.sh
 . lib/NetworkConnTest.sh
 . lib/CheckPermission.sh
 . lib/declare_variables.sh
 
-CheckInstall Nginx --install "/usr/sbin/nginx" "/etc/nginx,/usr/local/nginx"
-CheckPermission && NetworkConnTest www.google.com
+CheckPermission && CheckInstall --install && NetworkConnTest www.google.com
 Notification "Setup nginx server will take 30-60 minutes, Are you sure? [y/N]: " "${PURPLE}Start installing nginx server...${NC}\n${LINE}\n"
 [ `dpkg -l | awk '{print $2}' | grep -co nginx` -ne 0 ] && printf "${RED}ERROR: Server nginx is already installed.${NC}\n" && exit 1
 apt-get update
@@ -23,5 +23,5 @@ for each_line in 'ssl_ciphers "EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH";
 do  sed -i "/# Make site accessible from/ a \ \ \ \ \ \ \ \ ${each_line}" /etc/nginx/sites-enabled/default
 done
 service nginx reload && service nginx restart
-host=`ip a | awk '{print $2}' | grep -v '127.0.0.1' | grep -oE "([0-9]{1,3}\.){3}[0-9]{1,3}"`
-[ `service nginx status | grep -co not` -eq 0 ] && printf "\nNginx server is running (Site: ${GREEN}https://${host}${NC} Protocol: ${RED}Https 443 port${NC})\n\n" || printf "\n${RED}Sorry, nginx server is unavailable...${NC}\n\n"
+[ `service nginx status | grep -co not` -eq 0 ] && printf "\nNginx server is running (Site: ${GREEN}https://`GethostIPAddr`${NC} Protocol: ${RED}Https 443 port${NC})\n\n" || printf "\n${RED}Sorry, nginx server is unavailable...${NC}\n\n"
+
