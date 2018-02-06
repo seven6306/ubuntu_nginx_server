@@ -5,7 +5,7 @@
 . lib/CheckPermission.sh
 . lib/declare_variables.sh
 
-CheckPermission && CheckInstall --remove
+CheckPermission && CheckInstall Nginx --remove "/usr/sbin/nginx" "/etc/nginx,/usr/local/nginx"
 printf "Remove nginx server will ${RED}terminate each web service dependent on it${NC}, \n"
 Notification "Are you sure? [y/N]: " "\n${PURPLE}Start removing nginx server...${NC}\n${LINE}\n"
 [ `dpkg -l | grep -c nginx` -ne 0 ] && service nginx stop && apt-get remove nginx nginx-core -y
@@ -18,4 +18,3 @@ do  [ -d /usr/src/${rm_pkg} ] && rm -rf /usr/src/${rm_pkg}
     [ -f /usr/src/${rm_pkg}.tar.gz ] && rm -f /usr/src/${rm_pkg}.tar.gz
 done
 printf "${LINE}\n\n ${GREEN}*${NC} Remove nginx server completed.\n\n"
-
