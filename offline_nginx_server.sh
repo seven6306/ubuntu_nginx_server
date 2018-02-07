@@ -11,7 +11,7 @@ retry_time=10
 exe_path=$PWD
 
 CheckInstall Nginx --install "/usr/sbin/nginx" "/etc/nginx,/usr/local/nginx"
-CheckExecuteDir && printf "\033[0;31mERROR: Currently path is not allow to execute script.\033[0m\n" && exit 1 || printf "%s\t%31s\033[0;32m %s \033[0m]\n" " * Check currently path is effective" "[" "OK"
+CheckExecuteDir && printf "\033[0;31mERROR: Currently path is not allow to execute script.\033[0m\n" && exit 1 || printf "%s\t%34s\033[0;32m %s \033[0m]\n" " * Check currently path is effective" "[" "OK"
 CheckPermission && Notification "Setup nginx server will take 15-20 minutes, Are you sure? [y/N]: " "${PURPLE}Start installing nginx server...${NC}\n${LINE}\n" || exit 0
 for pkg in 'nginx-1.4.6.tar.gz' 'pcre-8.40.tar.gz' 'openssl-1.0.1c.tar.gz' 'zlib-1.2.11.tar.gz'
 do  printf "${PURPLE}Extract package $pkg${NC}\n"
