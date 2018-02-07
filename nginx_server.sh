@@ -16,7 +16,7 @@ apt-get update
 apt-get install nginx -y
 printf "${LINE}\n\n"
 [ `grep -c "# Make site accessible from" /etc/nginx/sites-enabled/default` -eq 0 ] && printf "${RED}ERROR: Configuration file of nginx is incompatible, No keyword \"# Make site accessible from\".${NC}\n" && exit 1
-SSLGenerator /etc/nginx
+SSLGenerator "/etc/nginx"
 openssl dhparam -out /etc/nginx/ssl/dhparam.pem 4096
 printf "${LINE}\n\n${PURPLE}Backup config /etc/nginx/sites-enabled/default${NC}\n\n${PURPLE}Restart nginx service & config:${NC}\n"
 mkdir -p /etc/nginx/bakeup && cp -r /etc/nginx/sites-enabled/default /etc/nginx/bakeup/default.bak
