@@ -1,11 +1,12 @@
 # Ubuntu_Nginx_Server
-<ul>1. Quick nginx server settings</ul>
-<ul>2. Nginx server with http & https</ul>
-<ul>3. Encrypt with three way, improve site security</ul>
-<ul>4. Add offline install script, support i386 & amd64</ul>
-<ul>5. Easily uninstall nginx server</ul>
+## Info
+* *Quick nginx server settings*
+* *Nginx server with http & https*
+* *Encrypt with three way, improve site security*
+* *Add offline install script, support i386 & amd64*
+* *Easily uninstall nginx server*
 
-# Usage
+## Usage
 <ul>1. Setup nginx server within internet
   <br><ol>Script: <b>nginx_server.sh</b></ol></ul>
 <ul>2. Setup nginx server without internet
