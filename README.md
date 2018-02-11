@@ -11,7 +11,10 @@
 Usage:
      1. Setup nginx server within internet
         Script: nginx_server.sh
+
      2. Setup nginx server without internet
         Script: offline_nginx_server.sh
+
      3. Uninstall: uninstall.sh
+
 ```
