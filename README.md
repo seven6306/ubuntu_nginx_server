@@ -6,9 +6,12 @@
 * *Add offline install script, support i386 & amd64*
 * *Easily uninstall nginx server*
 
-## Usage
-<ul>1. Setup nginx server within internet
-  <br><ol>Script: <b>nginx_server.sh</b></ol></ul>
-<ul>2. Setup nginx server without internet
-  <br><ol>Script: <b>offline_nginx_server.sh</b></ol></ul>
-<ul>3. Uninstall: <b>uninstall.sh</b></ul>
+## How to use it
+```javascript
+Usage:
+     1. Setup nginx server within internet
+        Script: nginx_server.sh
+     2. Setup nginx server without internet
+        Script: offline_nginx_server.sh
+     3. Uninstall: uninstall.sh
+```
