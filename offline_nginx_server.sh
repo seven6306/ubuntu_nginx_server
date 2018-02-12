@@ -6,7 +6,7 @@ retry_time=10
 exe_path=$PWD
 
 python lib/checkInstall.py nginx --install "/usr/sbin/nginx,/etc/nginx,/usr/local/nginx"
-python lib/checkCurrentdir.py || exit 1
+python lib/checkCurrentdir.py $exe_path || exit 1
 python lib/checkPermission.py || exit 1
 python lib/notification.py "Setup nginx server will take 15-20 minutes, Are you sure? [y/N]: " "${PURPLE}Start installing nginx server...${NC}\n${LINE}\n" || exit 0
 for pkg in 'nginx-1.4.6.tar.gz' 'pcre-8.40.tar.gz' 'openssl-1.0.1c.tar.gz' 'zlib-1.2.11.tar.gz'
