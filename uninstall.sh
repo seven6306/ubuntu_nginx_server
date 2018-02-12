@@ -1,13 +1,11 @@
 #!/bin/bash
 # Script for ubuntu 14.04 LTS
-. lib/CheckInstall.sh
-. lib/Notification.sh
-. lib/CheckPermission.sh
 . lib/declare_variables.sh
 
-CheckPermission && CheckInstall Nginx --remove "/usr/sbin/nginx" "/etc/nginx,/usr/local/nginx"
+python lib/checkPermission.py || exit 1
+python lib/checkInstall.py nginx --remove "/usr/sbin/nginx,/etc/nginx,/usr/local/nginx" || exit 1
 printf "Remove nginx server will ${RED}terminate each web service dependent on it${NC}, \n"
-Notification "Are you sure? [y/N]: " "\n${PURPLE}Start removing nginx server...${NC}\n${LINE}\n" || exit 0
+python lib/notification.py "Are you sure? [y/N]: " "\n${PURPLE}Start removing nginx server...${NC}\n${LINE}\n" || exit 0
 [ `dpkg -l | grep -c nginx` -ne 0 ] && service nginx stop && apt-get remove nginx nginx-core -y
 [ `ps -ef | grep -c nginx` -gt 1 ] && /usr/local/nginx/sbin/nginx -s stop
 [ -f /usr/sbin/nginx ] && rm -f /usr/sbin/nginx
