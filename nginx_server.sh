@@ -1,6 +1,5 @@
 #!/bin/bash
 # Script for ubuntu 14.04 LTS
-. lib/SSLGenerator.sh
 . lib/NetworkConnTest.sh
 . lib/declare_variables.sh
 
