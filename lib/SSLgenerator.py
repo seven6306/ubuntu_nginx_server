@@ -10,7 +10,7 @@ if __name__ == '__main__':
         ssl_dir = join(nginx_dir, 'ssl')
         if not isdir(ssl_dir):
             makedirs(ssl_dir)
-        print '\033[1;35mGenerate SSL Certification:\033[0m'
+        print '\033[1;35mGenerating SSL Certification:\033[0m'
         create_self_signed_cert(join(ssl_dir, cert_name))
         if not isfile(join(ssl_dir, cert_name + '.key')) or not isfile(join(ssl_dir, cert_name + '.crt')):
             print "\033[0;31m * \033[0m%s\t%26s\033[0;31m%s\033[0m]\n" % ("Generate SSL certification encrypt: sha256", "[", "Fail")
