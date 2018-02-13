@@ -38,4 +38,4 @@ if __name__ == '__main__':
     if len(argv) == 2:
         create_self_signed_cert("nginx")
     else:
-        print 'Usage: python SSLgenerator.py [KeyName]'
+        print 'Usage: python create_x.509_cert.py [KeyName]'
