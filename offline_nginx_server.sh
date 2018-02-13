@@ -1,6 +1,5 @@
 #!/bin/bash
 # Script for ubuntu 14.04 LTS
-. lib/SSLGenerator.sh
 . lib/declare_variables.sh
 retry_time=10
 exe_path=$PWD
@@ -44,7 +43,7 @@ do  sudo ./configure --with-openssl=/usr/local/ssl --with-http_ssl_module --with
 done
 printf "${LINE}\n\t\t\t${RED}Packages installed end line${NC}\n${LINE}\n"
 
-SSLGenerator /usr/local/nginx
+python SSLgenerator.py /usr/local/nginx
 
 [ `/usr/src/nginx-1.4.6/objs/nginx -V 2>&1 | grep -c with-ipv6` -ne 0 ] && printf "\033[0;32m * \033[0m%s\t%34s\033[0;32m %s \033[0m]\n" "Import ipv6 module to nginx server" "[" "OK" || printf "\033[0;31m * \033[0m%s\t%34s\033[0;31m%s\033[0m]\n" "Import ipv6 module to nginx server" "[" "Fail"
 rm -f /usr/local/nginx/conf/nginx.conf && cp -f ${exe_path}/nginx.conf /usr/local/nginx/conf/nginx.conf
