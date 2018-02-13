@@ -34,6 +34,7 @@ def create_self_signed_cert(fileName):
     except Exception as err:
         print str(err)
         raise SystemExit(59)
+
 if __name__ == '__main__':
     if len(argv) == 2:
         create_self_signed_cert("nginx")
