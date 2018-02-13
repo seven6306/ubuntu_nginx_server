@@ -7,7 +7,6 @@ from os.path import isfile, join
 def create_self_signed_cert(fileName):
     try:
         CERT_FILE, KEY_FILE = fileName + ".crt", fileName + ".key"
-
         for c in [CERT_FILE, KEY_FILE]:
             if isfile(c):
                 remove(c)
@@ -37,6 +36,7 @@ def create_self_signed_cert(fileName):
 
 if __name__ == '__main__':
     if len(argv) == 2:
-        create_self_signed_cert("nginx")
+        KeyName = argv[1]
+        create_self_signed_cert(KeyName)
     else:
-        print 'Usage: python create_x.509_cert.py [KeyName]'
+        print 'Usage: python create_x509_cert.py [KeyName]'
