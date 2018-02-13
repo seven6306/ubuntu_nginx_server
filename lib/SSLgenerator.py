@@ -17,4 +17,4 @@ if __name__ == '__main__':
             raise SystemExit(3)
         print "\033[0;32m * \033[0m%s\t%26s\033[0;32m %s \033[0m]" % ("Generate SSL certification encrypt: sha256", "[", "OK")
     else:
-        print 'Usage: python SSLgenerator.py [KeyName]'
+        print 'Usage: python SSLgenerator.py [PATH]'
