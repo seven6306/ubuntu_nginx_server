@@ -7,7 +7,7 @@
 * *Easily uninstall nginx server*
 
 ## How to use it
-```javascript
+```sh
 Usage:
      1. Setup nginx server within internet
         Script: nginx_server.sh
